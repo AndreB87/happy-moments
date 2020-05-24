@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <div th:replace="fragments/header :: default-head"></div>
+
+    <body>
+        <div th:replace="fragments/navbar :: loggedIn"></div>
+
+        <div class="container">
+            <h1>You are logged in...</h1>
+        </div>
+    </body>
+</html>

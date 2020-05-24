@@ -1,0 +1,26 @@
+<nav th:fragment="notLoggedIn">
+    <div class="nav-wrapper">
+        <a class="brand-logo" href="/" th:href="@{/}"><span class="happy">happy Moments</span></a>
+
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li>
+                <a class="nav-link" href="/signup" th:href="@{/signup}">Sign up</a>
+            </li>
+            <li>
+                <a class="nav-link" href="/login" th:href="@{/login}">Login</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<nav th:fragment="loggedIn">
+    <div class="nav-wrapper">
+        <a class="brand-logo" href="/" th:href="@{/}"><span class="happy">happy Moments</span></a>
+
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li>
+                <a class="nav-link" href="/" th:href="@{/logout}">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
