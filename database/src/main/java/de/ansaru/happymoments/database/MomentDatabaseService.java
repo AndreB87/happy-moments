@@ -4,8 +4,10 @@ import de.ansaru.happymoments.database.daos.MomentDao;
 import de.ansaru.happymoments.database.utils.MomentDaoModelConverter;
 import de.ansaru.happymoments.model.Moment;
 
-import javax.persistence.NoResultException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class MomentDatabaseService extends AbstractDatabaseService<Moment> {
@@ -20,9 +22,9 @@ public class MomentDatabaseService extends AbstractDatabaseService<Moment> {
                     .getResultList()
                     .stream()
                     .map(converter::fromEntity)
-                    .filter(m -> m != null)
+                    .filter(Objects::nonNull)
                     .collect(Collectors.toList());
-        } catch (NoResultException e) {
+        } catch (Exception e) {
             return new ArrayList<>();
         }
     }
@@ -35,9 +37,9 @@ public class MomentDatabaseService extends AbstractDatabaseService<Moment> {
                     .getResultList()
                     .stream()
                     .map(converter::fromEntity)
-                    .filter(m -> m != null)
+                    .filter(Objects::nonNull)
                     .collect(Collectors.toList());
-        } catch (NoResultException e) {
+        } catch (Exception e) {
             return new ArrayList<>();
         }
     }
@@ -51,7 +53,7 @@ public class MomentDatabaseService extends AbstractDatabaseService<Moment> {
                             .setParameter("id", id)
                             .getSingleResult())
             );
-        } catch (NoResultException e) {
+        } catch (Exception e) {
             return Optional.empty();
         }
     }
@@ -61,12 +63,12 @@ public class MomentDatabaseService extends AbstractDatabaseService<Moment> {
         try {
             MomentDao dao = converter.toEntity(model);
 
-            entityManager.getTransaction().begin();
-            entityManager.persist(model);
+            beginTransaction();
+            entityManager.persist(dao);
             entityManager.getTransaction().commit();
 
             return Optional.ofNullable(converter.fromEntity(dao));
-        } catch (NoResultException e) {
+        } catch (Exception e) {
             return Optional.empty();
         }
     }

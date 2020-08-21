@@ -20,8 +20,14 @@ import java.util.Optional;
 
 public class AuthenticationService {
 
+    private static final Logger LOGGER = Logger.getLogger(AuthenticationService.class);
     private final AuthenticationDatabaseService db = new AuthenticationDatabaseService();
+
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+    public AuthenticationService() {
+
+    }
 
     public LoginResult login(String email, String password) {
         Optional<Authentication> user = db.getByEmail(email);
@@ -59,19 +65,25 @@ public class AuthenticationService {
 
         if (optionalUser.isPresent()) {
             Authentication user = optionalUser.get();
-            if (encoder.encode(oldPassword).equals(user.getPassword())) {
+            try {
+                DaoAuthenticationProvider authenticationProvider = createDaoAuthenticationProvider();
+                org.springframework.security.core.Authentication auth = new UsernamePasswordAuthenticationToken(email, oldPassword);
+                authenticationProvider.authenticate(auth);
+
                 Authentication updated = new Authentication(
                     user.getUsername(),
                     encoder.encode(newPassword),
                     new ArrayList<>(user.getAuthorities())
                 );
+
                 return db.update(updated).isPresent() ?
                     PasswordChangeResult.SUCCESSFUL :
                     PasswordChangeResult.UNKNOWN_ERROR;
-            } else {
+            } catch (AuthenticationException e) {
                 return PasswordChangeResult.WRONG_PASSWORD;
             }
         } else {
+            LOGGER.error("Angemeldeter User ist nicht in der Datenbank!");
             return PasswordChangeResult.UNKNOWN_ERROR;
         }
     }

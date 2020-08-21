@@ -10,7 +10,7 @@ import java.util.List;
         @NamedQuery(name = "user.findAll", query = "SELECT u FROM UserDao u"),
         @NamedQuery(name = "user.findById", query = "SELECT u FROM UserDao u WHERE u.id = :id"),
         @NamedQuery(name = "user.findByEmail", query = "SELECT u FROM UserDao u WHERE u.email = :email"),
-        @NamedQuery(name = "user.findPasswordByEmail", query = "SELECT u.password FROM UserDao u WHERE u.email = :email")
+        @NamedQuery(name = "user.findIdByEmail", query = "SELECT u.userId FROM UserDao u WHERE u.email = :email")
 })
 public class UserDao implements IDao {
 
@@ -23,8 +23,6 @@ public class UserDao implements IDao {
     private String email;
 
     private boolean isAdmin;
-
-    private boolean isActive;
 
     private LocalDate accountCreationDate;
 
@@ -60,14 +58,6 @@ public class UserDao implements IDao {
 
     public void setAdmin(boolean admin) {
         isAdmin = admin;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
     }
 
     public LocalDate getAccountCreationDate() {

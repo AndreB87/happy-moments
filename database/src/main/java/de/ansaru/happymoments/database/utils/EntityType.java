@@ -2,8 +2,10 @@ package de.ansaru.happymoments.database.utils;
 
 public enum EntityType {
 
-    USER,
+    AUTHENTICATION,
     MOMENT,
-    MOMENT_FILE
+    MOMENT_FILE,
+    OTP,
+    USER
 
 }

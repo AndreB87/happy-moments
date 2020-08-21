@@ -13,7 +13,7 @@ import java.util.Optional;
 public class UserService {
 
     private static final Logger LOG = Logger.getLogger(UserService.class);
-    private UserDatabaseService db;
+    private final UserDatabaseService db;
 
     public UserService() {
         db = (UserDatabaseService) DatabaseServiceFactory.getService(EntityType.USER);
@@ -24,14 +24,22 @@ public class UserService {
         this.db = db;
     }
 
-    public User createUser(String email) {
+    public Optional<User> createUser(String email) {
         User user = new User.Builder()
                 .withEmail(email)
                 .withAccountCreationDate(LocalDate.now())
                 .asAdmin(false)
                 .build();
 
-        return db.create(user).orElse(null);
+        return db.create(user);
+    }
+
+    public Optional<User> getUserByEmail(String email) {
+        return db.getUserByEmail(email);
+    }
+
+    public Optional<Long> getUserIdByEmail(String email) {
+        return db.getUserIdByEmail(email);
     }
 
     public boolean updateInformation(long id, String name) {
@@ -46,6 +54,10 @@ public class UserService {
         } else {
             return false;
         }
+    }
+
+    public boolean userExist(String email) {
+        return db.getUserByEmail(email).isPresent();
     }
 
     public boolean deleteUser(int id) {

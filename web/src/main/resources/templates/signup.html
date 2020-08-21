@@ -4,23 +4,26 @@
 <div th:replace="fragments/header :: default-head"></div>
 
 <body>
-<div th:replace="fragments/navbar :: notLoggedIn"></div>
+    <div sec:authorize="isAuthenticated()" th:replace="fragments/navbar :: settings"></div>
+    <div th:replace="fragments/navbar :: navbar"></div>
 
-<div class="main-container center">
-    <form id="login-form" class="centered left-align" action="#" th:action="@{/signup}" method="post">
-        <label for="name">Name</label>
-        <input id="name" name="name" type="text" />
-        <label for="email">E-Mail Address</label>
-        <input id="email" name="email" type="text" />
-        <label for="password">Password</label>
-        <input id="password" name="password" type="password" />
-        <div class="right">
-            <input class="waves-effect btn main-red" type="submit" value="Login" />
+    <div class="main-container center">
+        <form id="login-form" class="centered left-align" action="#" th:action="@{/signup}" method="post">
+            <label for="email">E-Mail Adresse</label>
+            <input id="email" name="email" type="text" />
+            <label for="password">Passwort</label>
+            <input id="password" name="password" type="password" />
+            <div class="right">
+                <input class="waves-effect btn main-red" type="submit" value="Registrieren" />
+            </div>
+        </form>
+        <div th:if="${error_msg != null}" class="main-red login-feedback centered">
+            <p th:text="${error_msg}" />
         </div>
-    </form>
-    <div th:if="${error_text != null}" class="main-red login-feedback centered">
-        <p th:text="${error_text}" />
+        <div th:if="${info_msg != null}" class="green login-feedback centered">
+            <p th:text="${info_msg}" />
+        </div>
     </div>
-</div>
+    <div th:replace="fragments/header :: scripts"></div>
 </body>
 </html>

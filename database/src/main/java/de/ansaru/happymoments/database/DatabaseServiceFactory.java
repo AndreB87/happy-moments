@@ -8,12 +8,16 @@ public class DatabaseServiceFactory {
 
     public static AbstractDatabaseService<? extends IModel> getService(EntityType entityType) {
         switch (entityType) {
-            case USER:
-                return new UserDatabaseService();
+            case AUTHENTICATION:
+                return new AuthenticationDatabaseService();
             case MOMENT:
                 return new MomentDatabaseService();
             case MOMENT_FILE:
                 return new MomentFileDatabaseService();
+            case OTP:
+                return new OneTimePadDatabaseService();
+            case USER:
+                return new UserDatabaseService();
             default:
                 throw new NotImplementedException();
         }

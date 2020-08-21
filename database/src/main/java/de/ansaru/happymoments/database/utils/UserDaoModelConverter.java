@@ -14,7 +14,6 @@ public class UserDaoModelConverter implements IDaoModelConverter<UserDao, User> 
                     .withName(dao.getName())
                     .withEmail(dao.getEmail())
                     .asAdmin(dao.isAdmin())
-                    .asActive(dao.isActive())
                     .withAccountCreationDate(dao.getAccountCreationDate())
                     .build();
     }
@@ -30,7 +29,6 @@ public class UserDaoModelConverter implements IDaoModelConverter<UserDao, User> 
         dao.setName(model.getName());
         dao.setEmail(model.getEmail());
         dao.setAdmin(model.isAdmin());
-        dao.setActive(model.isActive());
         dao.setAccountCreationDate(model.getAccountCreationDate());
 
         return dao;

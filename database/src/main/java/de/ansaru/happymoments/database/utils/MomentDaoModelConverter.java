@@ -11,8 +11,8 @@ public class MomentDaoModelConverter implements IDaoModelConverter<MomentDao, Mo
             new Moment.Builder()
                 .withId(dao.getMomentId())
                 .withName(dao.getName())
-                .withDescription(dao.getDescription())
                 .withOwner(dao.getOwner())
+                .withDescription(dao.getDescription())
                 .withDate(dao.getDate())
                 .withCreationDate(dao.getCreationDate())
                 .withUserIds(dao.getUserIds())
@@ -28,9 +28,9 @@ public class MomentDaoModelConverter implements IDaoModelConverter<MomentDao, Mo
 
         MomentDao dao = new MomentDao();
         dao.setMomentId(model.getId());
+        dao.setName(model.getName());
         dao.setOwner(model.getOwner());
         dao.setDescription(model.getDescription());
-        dao.setOwner(model.getOwner());
         dao.setDate(model.getDate());
         dao.setCreationDate(model.getCreationDate());
         dao.setUserIds(model.getUserIds());

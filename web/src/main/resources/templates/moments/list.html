@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+
+    <div th:replace="fragments/header :: default-head"></div>
+
+    <body>
+        <div sec:authorize="isAuthenticated()" th:replace="fragments/navbar :: settings"></div>
+
+        <div th:replace="fragments/navbar :: navbar"></div>
+
+        <div class="main-container center">
+            <div id="my-moments">
+                <ul class="collection with-header">
+                    <li class="collection-header">Meine Momente</li>
+                    <li th:each="moment: ${myMoments}" class="collection-item">
+                        <a th:href="@{/moment/show?id=${moment.getId()}">${moment.getName()}</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div id="shared-moments">
+                <ul class="collection with-header">
+                    <li class="collection-header">Geteilte Moment</li>
+                    <li th:each="moment: ${sharedMoments}" class="collection-item">
+                        <a th:href="@{/moment/show?id=${moment.getId()}}" href="/moment/show?id=${moment.getId()}">${moment.getName()}</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div id="add-button">
+                <a class="btn-floating btn-large waves-effect waves-light green" th:href="@{/moments/create}" href="/moments/create">
+                    <i class="material-icons">add</i>
+                </a>
+            </div>
+
+            <div th:replace="fragments/infoboxes :: infoboxes"></div>
+        </div>
+
+        <div th:replace="fragments/header :: scripts"></div>
+    </body>
+</html>

@@ -3,15 +3,19 @@ package de.ansaru.happymoments.database.daos;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "otp")
+@Table(name = "otp", indexes = @Index(columnList = ("otp"), name = "otp_index", unique = true))
+@NamedQueries({
+    @NamedQuery(name = "otp.findAll", query = "SELECT o FROM OneTimePadDao o"),
+    @NamedQuery(name = "otp.findById", query = "SELECT o FROM OneTimePadDao o WHERE o.id = :id"),
+    @NamedQuery(name = "otp.findByOtp", query = "SELECT o FROM OneTimePadDao o WHERE o.otp = :otp")
+})
 public class OneTimePadDao implements IDao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne
-    private UserDao user;
+    private String email;
 
     private String otp;
 
@@ -27,12 +31,12 @@ public class OneTimePadDao implements IDao {
         this.id = id;
     }
 
-    public UserDao getUser() {
-        return user;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUser(UserDao user) {
-        this.user = user;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getOtp() {
@@ -41,5 +45,13 @@ public class OneTimePadDao implements IDao {
 
     public void setOtp(String otp) {
         this.otp = otp;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }

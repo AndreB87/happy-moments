@@ -20,4 +20,10 @@ public abstract class AbstractDatabaseService<T extends IModel> {
 
     public abstract boolean delete(long id);
 
+    protected void beginTransaction() {
+        if (!entityManager.getTransaction().isActive()) {
+            entityManager.getTransaction().begin();
+        }
+    }
+
 }

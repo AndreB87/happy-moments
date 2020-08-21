@@ -6,6 +6,8 @@ import de.ansaru.happymoments.model.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.NoResultException;
+import java.io.EOFException;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -21,7 +23,7 @@ public class AuthenticationDatabaseService extends AbstractDatabaseService<Authe
                     .getSingleResult();
 
             return Optional.ofNullable(converter.fromEntity(dao));
-        } catch (NoResultException e) {
+        } catch (Exception e) {
             return Optional.empty();
         }
     }
@@ -35,7 +37,7 @@ public class AuthenticationDatabaseService extends AbstractDatabaseService<Authe
                     .getSingleResult();
 
             return Optional.ofNullable(converter.fromEntity(dao));
-        } catch (NoResultException e) {
+        } catch (Exception e) {
             return Optional.empty();
         }
     }
@@ -43,7 +45,7 @@ public class AuthenticationDatabaseService extends AbstractDatabaseService<Authe
     @Override
     public Optional<Authentication> create(Authentication model) {
         try {
-            entityManager.getTransaction().begin();
+            beginTransaction();
             AuthenticationDao dao = converter.toEntity(model);
             entityManager.persist(dao);
             entityManager.getTransaction().commit();
@@ -62,7 +64,7 @@ public class AuthenticationDatabaseService extends AbstractDatabaseService<Authe
                     .setParameter("email", model.getUsername())
                     .getSingleResult();
 
-            entityManager.getTransaction().begin();
+            beginTransaction();
 
             dao.setUsername(model.getUsername());
             dao.setPassword(model.getPassword());
@@ -88,7 +90,7 @@ public class AuthenticationDatabaseService extends AbstractDatabaseService<Authe
                     .setParameter("id", id)
                     .getSingleResult();
 
-            entityManager.getTransaction().begin();
+            beginTransaction();
             entityManager.remove(dao);
             entityManager.getTransaction().commit();
 
@@ -105,7 +107,7 @@ public class AuthenticationDatabaseService extends AbstractDatabaseService<Authe
                 .setParameter("email", email)
                 .getSingleResult();
 
-            entityManager.getTransaction().begin();
+            beginTransaction();
             entityManager.remove(dao);
             entityManager.getTransaction().commit();
 

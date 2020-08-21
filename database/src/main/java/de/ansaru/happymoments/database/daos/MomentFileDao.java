@@ -6,11 +6,16 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "files")
+@NamedQueries({
+    @NamedQuery(name = "momentFile.findAll", query = "SELECT f FROM MomentFileDao f"),
+    @NamedQuery(name = "momentFile.findById", query = "SELECT f FROM MomentFileDao f WHERE f.fileId = :id"),
+    @NamedQuery(name = "momentFile.findByMoment", query = "SELECT f FROM MomentFileDao f WHERE f.momentId = :momentId")
+})
 public class MomentFileDao implements IDao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int fileId;
+    private long fileId;
 
     private String description;
 
@@ -22,17 +27,17 @@ public class MomentFileDao implements IDao {
 
     private LocalDate creationDate;
 
-    private int userId;
+    private long userId;
 
-    private int momentId;
+    private long momentId;
 
     public MomentFileDao() { }
 
-    public int getFileId() {
+    public long getFileId() {
         return fileId;
     }
 
-    public void setFileId(int fileId) {
+    public void setFileId(long fileId) {
         this.fileId = fileId;
     }
 
@@ -76,19 +81,19 @@ public class MomentFileDao implements IDao {
         this.creationDate = creationDate;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
-    public int getMomentId() {
+    public long getMomentId() {
         return momentId;
     }
 
-    public void setMomentId(int momentId) {
+    public void setMomentId(long momentId) {
         this.momentId = momentId;
     }
 }

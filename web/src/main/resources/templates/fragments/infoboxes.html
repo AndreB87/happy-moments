@@ -1,0 +1,8 @@
+<div th:fragment="infoboxes">
+    <div th:if="${error_msg != null}" class="main-red login-feedback centered">
+        <p th:text="${error_msg}" />
+    </div>
+    <div th:if="${info_msg != null}" class="green login-feedback centered">
+        <p th:text="${info_msg}" />
+    </div>
+</div>

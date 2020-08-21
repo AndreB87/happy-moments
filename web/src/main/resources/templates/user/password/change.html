@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+
+<div th:replace="fragments/header :: default-head"></div>
+
+<body>
+<div sec:authorize="isAuthenticated()" th:replace="fragments/navbar :: settings"></div>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="main-container center">
+    <form id="login-form" class="centered left-align" action="#" th:action="@{/user/password/change}" method="post">
+        <label for="oldpw">Altes Passwort</label>
+        <input id="oldpw" name="oldpw" type="password" />
+        <br>
+        <label for="newpw">Neues Passwort</label>
+        <input id="newpw" name="newpw" type="password" />
+        <br>
+        <label for="conf">Neues Passwort bestätigen</label>
+        <input id="conf" name="conf" type="password" />
+        <div>
+            <div class="right">
+                <input class="waves-effect btn main-red" type="submit" value="Passwort ändern" />
+            </div>
+        </div>
+    </form>
+    <div th:if="${error_msg != null}" class="main-red login-feedback centered">
+        <p th:text="${error_msg}" />
+    </div>
+    <div th:if="${info_msg != null}" class="green login-feedback centered">
+        <p th:text="${info_msg}" />
+    </div>
+</div>
+<div th:replace="fragments/header :: scripts"></div>
+</body>
+</html>

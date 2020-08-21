@@ -23,18 +23,30 @@ public class UserDatabaseService extends AbstractDatabaseService<User> {
         }
     }
 
+    public Optional<Long> getUserIdByEmail(String email) {
+        try {
+            Long entity = entityManager
+                    .createNamedQuery("user.findIdByEmail", Long.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+            return Optional.ofNullable(entity);
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
+    }
+
     @Override
     public Optional<User> get(long id) {
         try {
             return Optional.ofNullable(
                 converter.fromEntity(
                     entityManager
-                        .createNamedQuery("user.getById", UserDao.class)
+                        .createNamedQuery("user.findById", UserDao.class)
                         .setParameter("id", id)
                         .getSingleResult()
                 )
             );
-        } catch (NoResultException e) {
+        } catch (Exception e) {
             return Optional.empty();
         }
     }
@@ -49,7 +61,7 @@ public class UserDatabaseService extends AbstractDatabaseService<User> {
             entityManager.getTransaction().commit();
 
             return Optional.ofNullable(converter.fromEntity(dao));
-        } catch (NoResultException e) {
+        } catch (Exception e) {
             return Optional.empty();
         }
     }
@@ -58,7 +70,7 @@ public class UserDatabaseService extends AbstractDatabaseService<User> {
     public Optional<User> update(User user) {
         try {
             UserDao entity = entityManager
-                    .createNamedQuery("user.getById", UserDao.class)
+                    .createNamedQuery("user.findById", UserDao.class)
                     .setParameter("id", user.getId())
                     .getSingleResult();
 
@@ -68,7 +80,7 @@ public class UserDatabaseService extends AbstractDatabaseService<User> {
             entityManager.getTransaction().commit();
 
             return Optional.ofNullable(converter.fromEntity(entity));
-        } catch (NoResultException e) {
+        } catch (Exception e) {
             return Optional.empty();
         }
     }
@@ -76,7 +88,7 @@ public class UserDatabaseService extends AbstractDatabaseService<User> {
     @Override
     public boolean delete(long id) {
         try {
-            UserDao entity = entityManager.createNamedQuery("user.getById", UserDao.class)
+            UserDao entity = entityManager.createNamedQuery("user.findById", UserDao.class)
                     .setParameter("id", id)
                     .getSingleResult();
 
@@ -85,7 +97,7 @@ public class UserDatabaseService extends AbstractDatabaseService<User> {
             entityManager.getTransaction().commit();
 
             return !entityManager.contains(entity);
-        } catch (NoResultException e) {
+        } catch (Exception e) {
             return false;
         }
     }

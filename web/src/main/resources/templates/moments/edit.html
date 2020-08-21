@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+
+<div th:replace="fragments/header :: default-head"></div>
+
+<body>
+    <div sec:authorize="isAuthenticated()" th:replace="fragments/navbar :: settings"></div>
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <div class="main-container center">
+        <form id="create-moment-form" class="centered left-align" action="/moments/create" th:action="@{/moments/create}" method="post">
+            <div class="input-field">
+                <input id="name" name="name" type="text" th:value="${name}" />
+                <label for="name">Name</label>
+            </div>
+            <br>
+            <div class="input-field">
+                <textarea id="description" name="description" class="materialize-textarea" th:value="${description}"></textarea>
+                <label for="description">Beschreibung</label>
+            </div>
+            <br>
+            <div class="input-field">
+                <input id="date" name="date" type="date">
+                <label for="date">Datum</label>
+            </div>
+            <div>
+                <div class="right">
+                    <input class="waves-effect btn main-red" type="submit" value="Absenden" />
+                </div>
+            </div>
+        </form>
+
+        <div th:replace="fragments/infoboxes :: infoboxes"></div>
+
+    </div>
+
+    <div th:replace="fragments/header :: scripts"></div>
+
+</body>
+</html>
