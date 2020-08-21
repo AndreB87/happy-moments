@@ -18,7 +18,7 @@ public class OneTimePadDatabaseService extends AbstractDatabaseService<OneTimePa
                     .setParameter("otp", otp)
                     .getSingleResult();
 
-            return Option qal.ofNullable(converter.fromEntity(dao));
+            return Optional.ofNullable(converter.fromEntity(dao));
         } catch (NoResultException e) {
             return Optional.empty();
         }
