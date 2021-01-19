@@ -8,7 +8,7 @@ public enum Error {
     UNKNOWN_ERROR("Ein unbekannter Fehler ist aufgetreten"),
     WRONG_PASSWORD("Falsches Passwort");
 
-    private String text;
+    private final String text;
 
     Error(String text) {
         this.text = text;

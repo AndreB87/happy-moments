@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -131,7 +130,7 @@ public class MomentsController extends AbstractController {
             }
         } else {
 
-            model.addAttribute("error-msg", "Der benutzer wurde nicht gefunden.");
+            model.addAttribute("error-msg", "Der Benutzer wurde nicht gefunden.");
             return "error";
         }
     }
