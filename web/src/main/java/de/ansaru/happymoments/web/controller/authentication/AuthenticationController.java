@@ -62,15 +62,15 @@ public class AuthenticationController extends AbstractController {
 
             case WRONG_PASSWORD:
                 model.addAttribute("error_msg", Error.WRONG_PASSWORD.getText());
-                return "/login";
+                return "login";
 
             case UNKNOWN_EMAIL:
                 model.addAttribute("error_msg", Error.UNKNOWN_EMAIL.getText());
-                return "/login";
+                return "login";
 
             default:
                 model.addAttribute("error_msg", Error.UNKNOWN_ERROR.getText());
-                return"/login";
+                return"login";
         }
     }
 
