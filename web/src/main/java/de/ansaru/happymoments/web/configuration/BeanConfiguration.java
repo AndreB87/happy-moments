@@ -1,13 +1,39 @@
 package de.ansaru.happymoments.web.configuration;
 
-import de.ansaru.happymoments.services.*;
+import de.ansaru.happymoments.database.moments.IMomentDatabaseService;
+import de.ansaru.happymoments.database.moments.IMomentFileDatabaseService;
+import de.ansaru.happymoments.database.user.IOneTimePadDatabaseService;
+import de.ansaru.happymoments.database.user.IUserDatabaseService;
+import de.ansaru.happymoments.database.moments.MomentDatabaseService;
+import de.ansaru.happymoments.database.moments.MomentFileDatabaseService;
+import de.ansaru.happymoments.database.user.OneTimePadDatabaseService;
+import de.ansaru.happymoments.database.user.UserDatabaseService;
+import de.ansaru.happymoments.services.user.AuthenticationService;
+import de.ansaru.happymoments.services.user.IAuthenticationService;
+import de.ansaru.happymoments.services.user.converter.HappyMomentsUserDetailsConverter;
+import de.ansaru.happymoments.services.user.converter.IHappyMomentsUserDetailsConverter;
+import de.ansaru.happymoments.services.moments.IMomentFileService;
+import de.ansaru.happymoments.services.moments.IMomentService;
+import de.ansaru.happymoments.services.moments.MomentFileService;
+import de.ansaru.happymoments.services.moments.MomentService;
+import de.ansaru.happymoments.services.moments.converter.IMomentConverter;
+import de.ansaru.happymoments.services.moments.converter.IMomentFileConverter;
+import de.ansaru.happymoments.services.moments.converter.MomentConverter;
+import de.ansaru.happymoments.services.moments.converter.MomentFileConverter;
+import de.ansaru.happymoments.services.user.IOneTimePadService;
+import de.ansaru.happymoments.services.user.IUserService;
+import de.ansaru.happymoments.services.user.OneTimePadService;
+import de.ansaru.happymoments.services.user.UserService;
+import de.ansaru.happymoments.services.user.converter.IUserConverter;
+import de.ansaru.happymoments.services.user.converter.UserConverter;
+import de.ansaru.happymoments.services.user.utils.IOneTimePadUtils;
+import de.ansaru.happymoments.services.user.utils.OneTimePadUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Properties;
@@ -46,29 +72,69 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public AuthenticationService createAuthenticationService() {
+    public IAuthenticationService createAuthenticationService() {
         return new AuthenticationService();
     }
 
     @Bean
-    public MomentService createMomentService() {
+    public IMomentService createMomentService() {
         return new MomentService();
     }
 
     @Bean
-    MomentFileService createMomentFileService() {
+    public IMomentFileService createMomentFileService() {
         return new MomentFileService();
     }
 
     @Bean
-    public OneTimePadService createOneTimePadService() { return new OneTimePadService(); }
+    public IOneTimePadService createOneTimePadService() { return new OneTimePadService(); }
 
     @Bean
-    public UserService createUserService() { return new UserService(); }
+    public IUserService createUserService() { return new UserService(); }
 
     @Bean
-    public UserDetailsService createUserDetailService() {
-        return new UserDetailServiceImpl();
+    public IHappyMomentsUserDetailsConverter createHappyMomentsUserDetailsConverter() {
+        return new HappyMomentsUserDetailsConverter();
+    }
+
+    @Bean
+    public IMomentDatabaseService createMomentDatabaseService() {
+        return new MomentDatabaseService();
+    }
+
+    @Bean
+    public IMomentFileDatabaseService createMomentFileDatabaseService() {
+        return new MomentFileDatabaseService();
+    }
+
+    @Bean
+    public IOneTimePadDatabaseService createOneTimePadDatabaseService() {
+        return new OneTimePadDatabaseService();
+    }
+
+    @Bean
+    public IUserDatabaseService createUserDatabaseService() {
+        return new UserDatabaseService();
+    }
+
+    @Bean
+    public IMomentConverter createMomentConverter() {
+        return new MomentConverter();
+    }
+
+    @Bean
+    public IMomentFileConverter createMomentFileConverter() {
+        return new MomentFileConverter();
+    }
+
+    @Bean
+    public IUserConverter createUserConverter() {
+        return new UserConverter();
+    }
+
+    @Bean
+    public IOneTimePadUtils createOneTimePadUtils() {
+        return new OneTimePadUtils();
     }
 
     @Bean
@@ -89,5 +155,4 @@ public class BeanConfiguration {
 
         return mailSender;
     }
-
 }

@@ -8,10 +8,9 @@
         <version>2.2.2.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.example</groupId>
-    <artifactId>serving-web-content</artifactId>
+    <groupId>de.ansaru.happymoments</groupId>
+    <artifactId>happymoments-web</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>serving-web-content</name>
 
     <properties>
         <java.version>1.8</java.version>

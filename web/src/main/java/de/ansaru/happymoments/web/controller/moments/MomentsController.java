@@ -1,13 +1,16 @@
 package de.ansaru.happymoments.web.controller.moments;
 
-import de.ansaru.happymoments.model.AbstractController;
-import de.ansaru.happymoments.model.Moment;
-import de.ansaru.happymoments.model.MomentFile;
-import de.ansaru.happymoments.model.utils.FileType;
-import de.ansaru.happymoments.services.MomentFileService;
-import de.ansaru.happymoments.services.MomentService;
-import de.ansaru.happymoments.services.UserService;
+import de.ansaru.happymoments.model.moments.Moment;
+import de.ansaru.happymoments.model.moments.MomentFile;
+import de.ansaru.happymoments.model.moments.utils.FileType;
+import de.ansaru.happymoments.services.moments.IMomentFileService;
+import de.ansaru.happymoments.services.moments.IMomentService;
+import de.ansaru.happymoments.services.user.IUserService;
+import de.ansaru.happymoments.web.controller.AbstractController;
 import de.ansaru.happymoments.web.controller.moments.dtos.ListMomentDto;
+import de.ansaru.happymoments.web.controller.moments.utils.de.Messages;
+import de.ansaru.happymoments.web.controller.user.utils.de.Error;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,14 +28,16 @@ import java.util.Optional;
 @Controller
 public class MomentsController extends AbstractController {
 
-    @Autowired
-    private MomentService momentService;
+    private static final Logger LOG = Logger.getLogger(MomentsController.class);
 
     @Autowired
-    private MomentFileService momentFileService;
+    private IMomentService momentService;
 
     @Autowired
-    private UserService userService;
+    private IMomentFileService momentFileService;
+
+    @Autowired
+    private IUserService userService;
 
     @GetMapping("/moments")
     public String listMoments(Model model) {
@@ -43,12 +48,12 @@ public class MomentsController extends AbstractController {
 
             List<ListMomentDto> myMoments = new ArrayList<>();
             momentService.getMyMoments(userId).forEach(
-                    m -> myMoments.add(new ListMomentDto(m.getId(), m.getName()))
+                m -> myMoments.add(new ListMomentDto(m.getId(), m.getName()))
             );
 
             List<ListMomentDto> sharedMoments = new ArrayList<>();
             momentService.getSharedMoments(userId).forEach(
-                    m -> sharedMoments.add(new ListMomentDto(m.getId(), m.getName()))
+                m -> sharedMoments.add(new ListMomentDto(m.getId(), m.getName()))
             );
 
             model.addAttribute("myMoments", myMoments);
@@ -82,13 +87,16 @@ public class MomentsController extends AbstractController {
 
                     return "moments/show";
                 } else {
-                    model.addAttribute("error-msg", "Du hast keinen Zugriff auf diesen Moment!");
+                    LOG.warn("user " + userId + "tries to access moment " + moment.getId() + " with no permission");
+                    model.addAttribute("error-msg", Messages.NO_PERMISSION.getText());
                 }
             } else {
-                model.addAttribute("error-msg", "Der Moment konnte nicht gefunden werden");
+                LOG.warn("moment " + id + "not found");
+                model.addAttribute("error-msg", Messages.NOT_FOUND);
             }
         } else {
-            model.addAttribute("error-msg", "Ein unbekannter Fehler ist aufgetreten.");
+            LOG.error("unknown error in showMoment - id: " + id);
+            model.addAttribute("error-msg", Error.UNKNOWN_ERROR.getText());
         }
 
         return "error";
@@ -125,12 +133,12 @@ public class MomentsController extends AbstractController {
                 return "redirect:/moments/show";
             } else {
 
-                model.addAttribute("error-msg", "Ein Fehler ist aufgetreten.");
+                model.addAttribute("error-msg", Messages.NOT_AVAILABLE);
                 return "error";
             }
         } else {
-
-            model.addAttribute("error-msg", "Der Benutzer wurde nicht gefunden.");
+            LOG.error("user " + getUsername() + " not found");
+            model.addAttribute("error-msg", Error.USER_NOT_FOUND);
             return "error";
         }
     }
