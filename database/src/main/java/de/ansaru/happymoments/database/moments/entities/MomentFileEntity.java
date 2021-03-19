@@ -1,6 +1,7 @@
 package de.ansaru.happymoments.database.moments.entities;
 
 import de.ansaru.happymoments.database.entities.IEntity;
+import de.ansaru.happymoments.database.moments.constants.MomentFileQueries;
 
 import javax.persistence.*;
 import java.io.File;
@@ -9,9 +10,18 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "files")
 @NamedQueries({
-    @NamedQuery(name = "momentFile.findAll", query = "SELECT f FROM MomentFileEntity f"),
-    @NamedQuery(name = "momentFile.findById", query = "SELECT f FROM MomentFileEntity f WHERE f.fileId = :id"),
-    @NamedQuery(name = "momentFile.findByMoment", query = "SELECT f FROM MomentFileEntity f WHERE f.momentId = :momentId")
+    @NamedQuery(
+        name = MomentFileQueries.FIND_ALL,
+        query = "SELECT f FROM MomentFileEntity f"
+    ),
+    @NamedQuery(
+        name = MomentFileQueries.FIND_BY_ID,
+        query = "SELECT f FROM MomentFileEntity f WHERE f.fileId = :id"
+    ),
+    @NamedQuery(
+        name = MomentFileQueries.FIND_BY_MOMENT,
+        query = "SELECT f FROM MomentFileEntity f WHERE f.momentId = :momentId"
+    )
 })
 public class MomentFileEntity implements IEntity {
 

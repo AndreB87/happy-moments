@@ -1,6 +1,7 @@
 package de.ansaru.happymoments.database.moments.entities;
 
 import de.ansaru.happymoments.database.entities.IEntity;
+import de.ansaru.happymoments.database.moments.constants.MomentQueries;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -9,10 +10,22 @@ import java.util.List;
 @Entity
 @Table(name = "moments")
 @NamedQueries({
-    @NamedQuery(name = "moments.findAll", query = "SELECT m FROM MomentEntity m"),
-    @NamedQuery(name = "moments.findById", query = "SELECT m FROM MomentEntity m WHERE m.momentId = :id"),
-    @NamedQuery(name = "moments.findByOwner", query = "SELECT m FROM MomentEntity m WHERE m.ownerId = :ownerId"),
-    @NamedQuery(name = "moments.findByUser", query = "SELECT m FROM MomentEntity m JOIN m.users u WHERE u = :userId")
+    @NamedQuery(
+        name = MomentQueries.FIND_ALL,
+        query = "SELECT m FROM MomentEntity m"
+    ),
+    @NamedQuery(
+        name = MomentQueries.FIND_BY_ID,
+        query = "SELECT m FROM MomentEntity m WHERE m.momentId = :id"
+    ),
+    @NamedQuery(
+        name = MomentQueries.FIND_BY_OWNER,
+        query = "SELECT m FROM MomentEntity m WHERE m.ownerId = :ownerId"
+    ),
+    @NamedQuery(
+        name = MomentQueries.FIND_BY_USER,
+        query = "SELECT m FROM MomentEntity m JOIN m.users u WHERE u = :userId"
+    )
 })
 public class MomentEntity implements IEntity {
 

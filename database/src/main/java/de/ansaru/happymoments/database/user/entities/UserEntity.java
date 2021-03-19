@@ -1,6 +1,7 @@
 package de.ansaru.happymoments.database.user.entities;
 
 import de.ansaru.happymoments.database.entities.IEntity;
+import de.ansaru.happymoments.database.user.constants.UserQueries;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -9,10 +10,22 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @NamedQueries({
-        @NamedQuery(name = "user.findAll", query = "SELECT u FROM UserEntity u"),
-        @NamedQuery(name = "user.findById", query = "SELECT u FROM UserEntity u WHERE u.id = :id"),
-        @NamedQuery(name = "user.findByEmail", query = "SELECT u FROM UserEntity u WHERE u.email = :email"),
-        @NamedQuery(name = "user.findIdByEmail", query = "SELECT u.userId FROM UserEntity u WHERE u.email = :email")
+        @NamedQuery(
+            name = UserQueries.FIND_ALL,
+            query = "SELECT u FROM UserEntity u"
+        ),
+        @NamedQuery(
+            name = UserQueries.FIND_BY_ID,
+            query = "SELECT u FROM UserEntity u WHERE u.id = :id"
+        ),
+        @NamedQuery(
+            name = UserQueries.FIND_BY_EMAIL,
+            query = "SELECT u FROM UserEntity u WHERE u.email = :email"
+        ),
+        @NamedQuery(
+            name = UserQueries.FIND_ID_BY_EMAIL,
+            query = "SELECT u.userId FROM UserEntity u WHERE u.email = :email"
+        )
 })
 public class UserEntity implements IEntity {
 

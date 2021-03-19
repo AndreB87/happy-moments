@@ -1,7 +1,7 @@
 package de.ansaru.happymoments.database.moments;
 
 import de.ansaru.happymoments.database.AbstractDatabaseService;
-import de.ansaru.happymoments.database.moments.IMomentFileDatabaseService;
+import de.ansaru.happymoments.database.moments.constants.MomentFileQueries;
 import de.ansaru.happymoments.database.moments.entities.MomentFileEntity;
 
 import java.util.HashMap;
@@ -13,13 +13,13 @@ public class MomentFileDatabaseService extends AbstractDatabaseService<MomentFil
     public List<MomentFileEntity> getFilesByMoment(long momentId) {
         Map<String, Object> params = new HashMap<>();
         params.put("momentId", momentId);
-        return getResultList("momentFile.findByMoment", MomentFileEntity.class, params);
+        return getResultList(MomentFileQueries.FIND_BY_MOMENT, MomentFileEntity.class, params);
     }
 
     @Override
     public MomentFileEntity get(long id) {
         Map<String, Object> params = new HashMap<>();
         params.put("id", id);
-        return getSingleResult("momentFile.findById", MomentFileEntity.class, params);
+        return getSingleResult(MomentFileQueries.FIND_BY_ID, MomentFileEntity.class, params);
     }
 }

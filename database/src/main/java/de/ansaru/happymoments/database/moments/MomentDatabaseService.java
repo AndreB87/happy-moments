@@ -1,7 +1,7 @@
 package de.ansaru.happymoments.database.moments;
 
 import de.ansaru.happymoments.database.AbstractDatabaseService;
-import de.ansaru.happymoments.database.moments.IMomentDatabaseService;
+import de.ansaru.happymoments.database.moments.constants.MomentQueries;
 import de.ansaru.happymoments.database.moments.entities.MomentEntity;
 
 import java.util.HashMap;
@@ -14,21 +14,21 @@ public class MomentDatabaseService extends AbstractDatabaseService<MomentEntity>
     public MomentEntity get(long id) {
         Map<String, Object> params = new HashMap<>();
         params.put("id", id);
-        return getSingleResult("moments.findById", MomentEntity.class, params);
+        return getSingleResult(MomentQueries.FIND_BY_ID, MomentEntity.class, params);
     }
 
     @Override
     public List<MomentEntity> getMomentsByOwner(long ownerId) {
         Map<String, Object> params = new HashMap<>();
         params.put("ownerId", ownerId);
-        return getResultList("moments.findByOwner", params);
+        return getResultList(MomentQueries.FIND_BY_OWNER, params);
     }
 
     @Override
     public List<MomentEntity> getMomentsByUser(long userId) {
         Map<String, Object> params = new HashMap<>();
         params.put("userId", userId);
-        return getResultList("moments.findByUser", params);
+        return getResultList(MomentQueries.FIND_BY_USER, params);
     }
 
     private List<MomentEntity> getResultList(String namedQuery, Map<String, Object> params) {

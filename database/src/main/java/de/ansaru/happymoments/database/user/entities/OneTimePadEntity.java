@@ -1,15 +1,25 @@
 package de.ansaru.happymoments.database.user.entities;
 
 import de.ansaru.happymoments.database.entities.IEntity;
+import de.ansaru.happymoments.database.user.constants.OneTimePadQueries;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "otp", indexes = @Index(columnList = ("otp"), name = "otp_index", unique = true))
 @NamedQueries({
-    @NamedQuery(name = "otp.findAll", query = "SELECT o FROM OneTimePadEntity o"),
-    @NamedQuery(name = "otp.findById", query = "SELECT o FROM OneTimePadEntity o WHERE o.id = :id"),
-    @NamedQuery(name = "otp.findByOtp", query = "SELECT o FROM OneTimePadEntity o WHERE o.otp = :otp")
+    @NamedQuery(
+        name = OneTimePadQueries.FIND_ALL,
+        query = "SELECT o FROM OneTimePadEntity o"
+    ),
+    @NamedQuery(
+        name = OneTimePadQueries.FIND_BY_ID,
+        query = "SELECT o FROM OneTimePadEntity o WHERE o.id = :id"
+    ),
+    @NamedQuery(
+        name = OneTimePadQueries.FIND_BY_OTP,
+        query = "SELECT o FROM OneTimePadEntity o WHERE o.otp = :otp"
+    )
 })
 public class OneTimePadEntity implements IEntity {
 

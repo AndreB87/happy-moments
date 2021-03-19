@@ -1,7 +1,7 @@
 package de.ansaru.happymoments.database.user;
 
 import de.ansaru.happymoments.database.AbstractDatabaseService;
-import de.ansaru.happymoments.database.user.IUserDatabaseService;
+import de.ansaru.happymoments.database.user.constants.UserQueries;
 import de.ansaru.happymoments.database.user.entities.UserEntity;
 
 import javax.persistence.EntityManager;
@@ -15,14 +15,14 @@ public class UserDatabaseService extends AbstractDatabaseService<UserEntity> imp
     public UserEntity get(long id) {
         Map<String, Object> params = new HashMap<>();
         params.put("id", id);
-        return getSingleResult("user.findById", params);
+        return getSingleResult(UserQueries.FIND_BY_ID, params);
     }
 
     @Override
     public UserEntity getUserByEmail(String email) {
         Map<String, Object> params = new HashMap<>();
         params.put("email", email);
-        return getSingleResult("user.findByEmail", params);
+        return getSingleResult(UserQueries.FIND_BY_EMAIL, params);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class UserDatabaseService extends AbstractDatabaseService<UserEntity> imp
         try {
             EntityManager entityManager = getEntityManager();
             Long id = entityManager
-                    .createNamedQuery("user.findIdByEmail", Long.class)
+                    .createNamedQuery(UserQueries.FIND_ID_BY_EMAIL, Long.class)
                     .setParameter("email", email)
                     .getSingleResult();
             entityManager.clear();
