@@ -109,11 +109,11 @@ public class MomentsController extends AbstractController {
 
     @PostMapping("/moments/create")
     public String createMoment(
-            @RequestParam(name = "name", required = true)
+            @RequestParam(name = "name")
                 String momentName,
-            @RequestParam(name = "description", required = true)
+            @RequestParam(name = "description")
                 String momentDescription,
-            @RequestParam(name = "date", required = true)
+            @RequestParam(name = "date")
                 String momentDate,
             Model model) {
 
