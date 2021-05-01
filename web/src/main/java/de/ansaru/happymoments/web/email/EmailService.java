@@ -1,4 +1,4 @@
-package de.ansaru.happymoments.web.email.impl;
+package de.ansaru.happymoments.web.email;
 
 import de.ansaru.happymoments.web.email.IEmailService;
 import org.springframework.beans.factory.annotation.Autowired;

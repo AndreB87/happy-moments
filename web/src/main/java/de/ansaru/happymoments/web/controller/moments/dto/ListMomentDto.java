@@ -1,4 +1,4 @@
-package de.ansaru.happymoments.web.controller.moments.dtos;
+package de.ansaru.happymoments.web.controller.moments.dto;
 
 public class ListMomentDto {
 
