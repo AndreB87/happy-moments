@@ -7,7 +7,7 @@ import de.ansaru.happymoments.services.moments.IMomentFileService;
 import de.ansaru.happymoments.services.moments.IMomentService;
 import de.ansaru.happymoments.services.user.IUserService;
 import de.ansaru.happymoments.web.controller.AbstractController;
-import de.ansaru.happymoments.web.controller.moments.dtos.ListMomentDto;
+import de.ansaru.happymoments.web.controller.moments.dto.ListMomentDto;
 import de.ansaru.happymoments.web.controller.moments.utils.de.Messages;
 import de.ansaru.happymoments.web.controller.user.utils.de.Error;
 import org.apache.log4j.Logger;
@@ -190,5 +190,4 @@ public class MomentsController extends AbstractController {
         }
         return "error";
     }
-
 }

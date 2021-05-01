@@ -43,17 +43,6 @@ public class UserEntity implements IEntity {
 
     private String password;
 
-    private boolean accountExpired;
-
-    private boolean accountLocked;
-
-    private boolean credentialsExpired;
-
-    private boolean enabled;
-
-    @ElementCollection
-    private List<String> authorities;
-
     public UserEntity() { }
 
     public long getUserId() {
@@ -96,52 +85,12 @@ public class UserEntity implements IEntity {
         this.accountCreationDate = accountCreationDate;
     }
 
-    public void setAuthorities(List<String> authorities) {
-        this.authorities = authorities;
-    }
-
-    public List<String> getAuthorities() {
-        return authorities;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
 
     public String getPassword() {
         return password;
-    }
-
-    public void setAccountExpired(boolean isAccountExpired) {
-        this.accountExpired = isAccountExpired;
-    }
-
-    public boolean isAccountNonExpired() {
-        return !accountExpired;
-    }
-
-    public void setAccountLocked(boolean accountLocked) {
-        this.accountLocked = accountLocked;
-    }
-
-    public boolean isAccountNonLocked() {
-        return !accountLocked;
-    }
-
-    public void setCredentialsExpired(boolean credentialsExpired) {
-        this.credentialsExpired = credentialsExpired;
-    }
-
-    public boolean isCredentialsNonExpired() {
-        return !credentialsExpired;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
     }
 
 

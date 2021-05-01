@@ -10,8 +10,8 @@ import de.ansaru.happymoments.database.user.OneTimePadDatabaseService;
 import de.ansaru.happymoments.database.user.UserDatabaseService;
 import de.ansaru.happymoments.services.user.AuthenticationService;
 import de.ansaru.happymoments.services.user.IAuthenticationService;
-import de.ansaru.happymoments.services.user.converter.HappyMomentsUserDetailsConverter;
-import de.ansaru.happymoments.services.user.converter.IHappyMomentsUserDetailsConverter;
+import de.ansaru.happymoments.services.user.converter.UserDetailsConverter;
+import de.ansaru.happymoments.services.user.converter.IUserDetailsConverter;
 import de.ansaru.happymoments.services.moments.IMomentFileService;
 import de.ansaru.happymoments.services.moments.IMomentService;
 import de.ansaru.happymoments.services.moments.MomentFileService;
@@ -93,8 +93,8 @@ public class BeanConfiguration {
     public IUserService createUserService() { return new UserService(); }
 
     @Bean
-    public IHappyMomentsUserDetailsConverter createHappyMomentsUserDetailsConverter() {
-        return new HappyMomentsUserDetailsConverter();
+    public IUserDetailsConverter createHappyMomentsUserDetailsConverter() {
+        return new UserDetailsConverter();
     }
 
     @Bean
